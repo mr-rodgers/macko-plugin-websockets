@@ -1,0 +1,40 @@
+{
+  "name": "macko-websockets",
+  "version": "0.1.0",
+  "description": "Websocket support for Macko",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm run build",
+    "build": "tsc -p ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/te-je/macko-websockets.git"
+  },
+  "keywords": [
+    "macko",
+    "websocket",
+    "ws"
+  ],
+  "author": "Te-je Rodgers",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/te-je/macko-websockets/issues"
+  },
+  "homepage": "https://github.com/te-je/macko-websockets#readme",
+  "extensions": {
+    "macko.hooks.protocol-handler": [
+      {
+        "module": "macko-websockets"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^7.0.15",
+    "typescript": "^2.3.2"
+  },
+  "dependencies": {
+    "macko-plugin-helpers": "file:///C:\\Users\\Te-je\\code\\apps\\macko-plugins\\macko-plugin-helpers",
+    "ws": "^2.3.1"
+  }
+}
