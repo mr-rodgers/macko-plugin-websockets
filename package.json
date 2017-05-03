@@ -34,7 +34,7 @@
     "typescript": "^2.3.2"
   },
   "dependencies": {
-    "macko-plugin-helpers": "file:///C:\\Users\\Te-je\\code\\apps\\macko-plugins\\macko-plugin-helpers",
+    "macko-plugin-helpers": "github:te-je/macko-plugin-helpers",
     "ws": "^2.3.1"
   }
 }
