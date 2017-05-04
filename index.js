@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const events_1 = require("events");
 const ws = require("nodejs-websocket");
 /**
  * A straight-forward implementation of Macko's ProtocolHandler
@@ -16,7 +17,7 @@ class WebSocketHandler {
     }
 }
 exports.default = WebSocketHandler;
-class WebSocketWatcher extends NodeJS.EventEmitter {
+class WebSocketWatcher extends events_1.EventEmitter {
     constructor(url) {
         super();
         this.conn = null;
