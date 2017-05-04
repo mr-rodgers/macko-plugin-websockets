@@ -1,33 +1,40 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Websocket = require("ws");
-class WebsocketHandler {
+const ws = require("nodejs-websocket");
+/**
+ * A straight-forward implementation of Macko's ProtocolHandler
+ * extension interface for websockets.
+ */
+class WebSocketHandler {
     constructor() {
         this.protocol = "ws://";
-        this.name = "Websockets";
+        this.name = "WebSocket";
         this.supportedPayloads = ["text/plain"];
     }
     watch(url) {
-        let ws = new Websocket(url);
-        return new WebsocketWatcher(ws);
+        return new WebSocketWatcher(url);
     }
 }
-exports.default = WebsocketHandler;
-class WebsocketWatcher extends NodeJS.EventEmitter {
-    constructor(ws) {
+exports.default = WebSocketHandler;
+class WebSocketWatcher extends NodeJS.EventEmitter {
+    constructor(url) {
         super();
-        this.ws = ws;
-        // Catch and emit message events
-        ws.on("message", (data, flags) => {
-            this.emit("message", data, flags);
-        });
-        // Catch and emit error events
-        ws.on("error", err => this.emit("error", err));
-        // Catch and emit close events
-        ws.on("close", (code, message) => this.emit("close", code, message));
+        this.conn = null;
+        // Keep a reference to the connection so we can
+        // close it on request.
+        this.conn = ws.connect(url);
+        // Add handlers for socket events and forward them as
+        // events on this emmitter.
+        this.conn.on('error', (err) => this.emit('error', err));
+        this.conn.on('close', () => this.emit('close'));
+        this.conn.on('text', (message) => this.emit('message', message, { mime: 'text/plain' }));
     }
+    /**
+     * Close the websocket connet
+     */
     close() {
-        this.ws.close();
+        if (this.conn !== null)
+            this.conn.close();
     }
 }
 //# sourceMappingURL=index.js.map

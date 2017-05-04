@@ -1,34 +1,42 @@
 import { ProtocolHandler } from "macko-plugin-helpers";
-import * as Websocket from "ws";
+import * as ws from "nodejs-websocket";
 
-export default class WebsocketHandler implements ProtocolHandler {
+
+/**
+ * A straight-forward implementation of Macko's ProtocolHandler
+ * extension interface for websockets.
+ */
+export default class WebSocketHandler implements ProtocolHandler {
     protocol = "ws://";
-    name = "Websockets";
+    name = "WebSocket";
     supportedPayloads = ["text/plain"];
 
     watch(url: string) {
-        let ws = new Websocket(url);
-        return new WebsocketWatcher(ws);        
+        return new WebSocketWatcher(url);        
     }
 }
 
-class WebsocketWatcher extends NodeJS.EventEmitter {
-    constructor(private ws: Websocket) { 
+class WebSocketWatcher extends NodeJS.EventEmitter {
+    private conn: any = null;
+
+    constructor(url: string) { 
         super();
 
-        // Catch and emit message events
-        ws.on("message", (data, flags) => {
-            this.emit("message", data, flags);
-        });
+        // Keep a reference to the connection so we can
+        // close it on request.
+        this.conn = ws.connect(url);
 
-        // Catch and emit error events
-        ws.on("error", err => this.emit("error", err));
-
-        // Catch and emit close events
-        ws.on("close", (code, message) => this.emit("close", code, message));
+        // Add handlers for socket events and forward them as
+        // events on this emmitter.
+        this.conn.on('error', (err: Error) => this.emit('error', err));
+        this.conn.on('close', () => this.emit('close'));
+        this.conn.on('text', (message: string) => this.emit('message', message, {mime: 'text/plain'}));
     }
 
+    /**
+     * Close the websocket connet
+     */
     close() {
-        this.ws.close();
+        if (this.conn !== null) this.conn.close();
     }
 }
