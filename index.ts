@@ -1,13 +1,12 @@
-import { ProtocolHandler } from "macko-plugin-helpers";
 import { EventEmitter } from "events";
-import * as ws from "nodejs-websocket";
+const ws: any = require("nodejs-websocket"); // no typings
 
 
 /**
  * A straight-forward implementation of Macko's ProtocolHandler
  * extension interface for websockets.
  */
-export default class WebSocketHandler implements ProtocolHandler {
+export default class WebSocketHandler implements Macko.IProtocolHandler {
     protocol = "ws://";
     name = "WebSocket";
     supportedPayloads = ["text/plain"];

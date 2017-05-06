@@ -1,5 +1,5 @@
 {
-  "name": "macko-websockets",
+  "name": "@macko/plugin-websockets",
   "version": "0.1.0",
   "description": "Websocket support for Macko",
   "main": "index.js",
@@ -22,19 +22,17 @@
     "url": "https://github.com/te-je/macko-websockets/issues"
   },
   "homepage": "https://github.com/te-je/macko-websockets#readme",
-  "extensions": {
-    "macko.hooks.protocol-handler": [
-      {
-        "module": "macko-websockets"
-      }
-    ]
-  },
+  "extensions": [
+    {
+      "hook": "macko:hooks:protocol-handler",
+      "module": "@macko/plugin-websockets"
+    }
+  ],
   "devDependencies": {
     "@types/node": "^7.0.15",
     "typescript": "^2.3.2"
   },
   "dependencies": {
-    "macko-plugin-helpers": "github:te-je/macko-plugin-helpers",
     "nodejs-websocket": "^1.7.1"
   }
 }
