@@ -6,7 +6,11 @@
   "scripts": {
     "postinstall": "npm run build",
     "build": "tsc -p .",
-    "release": "standard-version"
+    "release": "standard-version",
+    "prepublish": "npm run build",
+    "postpublish": "npm run clean",
+    "clean": "rimraf *.js *.js.map"
+
   },
   "repository": {
     "type": "git",
@@ -31,6 +35,7 @@
   ],
   "devDependencies": {
     "@types/node": "^7.0.15",
+    "rimraf": "^2.6.1",
     "standard-version": "^4.0.0",
     "typescript": "^2.3.2"
   },
