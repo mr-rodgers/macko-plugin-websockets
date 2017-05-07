@@ -1,6 +1,6 @@
 {
   "name": "@macko/plugin-websockets",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Websocket support for Macko",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,6 @@
     "prepublish": "npm run build",
     "postpublish": "npm run clean",
     "clean": "rimraf *.js *.js.map"
-
   },
   "repository": {
     "type": "git",
