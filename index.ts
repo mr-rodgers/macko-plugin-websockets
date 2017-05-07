@@ -6,7 +6,7 @@ const ws: any = require("nodejs-websocket"); // no typings
  * A straight-forward implementation of Macko's ProtocolHandler
  * extension interface for websockets.
  */
-export default class WebSocketHandler implements Macko.IProtocolHandler {
+class WebSocketHandler implements Macko.IProtocolHandler {
     protocol = "ws://";
     name = "WebSocket";
     supportedPayloads = ["text/plain"];
@@ -40,3 +40,5 @@ class WebSocketWatcher extends EventEmitter {
         if (this.conn !== null) this.conn.close();
     }
 }
+
+export default new WebSocketHandler();
